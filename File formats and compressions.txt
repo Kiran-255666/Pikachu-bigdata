@@ -9,7 +9,7 @@ Avro:
 Data serialiation framework
 Language C,C++..
 Schema and data Tied Together
-Data is compresses in binary format
+Data is compressed in binary format
 Schema is written using JSON format
 Schema Evolution
 Good performance in terms of storage and processing
