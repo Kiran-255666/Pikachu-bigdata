@@ -1,0 +1,67 @@
+parquet:
+Columnar file format
+Efficient compression and encoding schemas
+Efficient to work with query based on selected columns
+Data and Schema are tied together
+
+Avro:
+
+Data serialiation framework
+Language C,C++..
+Schema and data Tied Together
+Data is compresses in binary format
+Schema is written using JSON format
+Schema Evolution
+Good performance in terms of storage and processing
+
+
+Gzip compression:
+
+Good compression & Good Speed
+Good choice for cold data
+When used with RCFiles, Sequence Files,Avro Files,
+Gzip provides great compression and speed +splittable component
+
+
+Snappy Compression:
+Medium compression
+Very fast in compression & decompression
+When we used with sequenceFile, Avro, Parquet file format, 
+it can split
+
+
+bzip2:
+Great compression
+Very slow in compression and Decompression
+Splittable compression codec
+
+
+lz4 Compression:
+medium compression
+Fast in compression and Decompression
+Better than snappy not as good as bzip2 and Gzip
+Recommended
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
