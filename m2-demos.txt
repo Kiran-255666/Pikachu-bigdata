@@ -1,5 +1,6 @@
 Hive
 ————
+create database pikachu;
  
 use pikachu;
 
