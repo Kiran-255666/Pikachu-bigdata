@@ -1,3 +1,7 @@
+
+To connect to beeline:
+beeline -u jdbc:hive2://localhost:10000/default -n cloudera
+
 Hive
 ————
 create database pikachu;
