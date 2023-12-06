@@ -2,25 +2,26 @@
 To connect to beeline:
 beeline -u jdbc:hive2://localhost:10000/default -n cloudera
 
-Hive
+Beeline
 ————
 create database pikachu;
- 
+#I have created a database called 'pikachu'.
+#To work with the 'pikachu' database, execute the below command
 use pikachu;
-
+#Lets create a table called customers
 create table customers (
 id bigint,
 name string,
 address string
 );
-
+# the table 'customers' got created, to verify execute the following command
 show tables;
-describe customers
+# To display schema of customers table, execute the following command
+describe customers;
+#Let's insert data into our customers table
 insert into customers values (
 1111, "John", "WA"
-);
-
-insert into customers values (
+), (
 2222, "Emily", "WA"
 ), (
 3333, "Rick", "WA"
@@ -31,9 +32,9 @@ insert into customers values (
 ), (
 6666, "Nina", "NY"
 );
-
+#Now, we will display the customers residing in "WA" using the following command
 select * from customers where address = "WA";
-
+#Here we will select the columns which we want to be displayed as output
 select name, address from customers where address = "CA";
 
 select name, address from customers where address = "WA" and id > 2222;
@@ -50,10 +51,7 @@ select address, count(*) as customer_count from customers group by address;
 
 select * from customers limit 1;
 
-
-
-
-Hive
+#Now, lets create a new table called 'orders'
 ————
 
 create table if not exists orders (
@@ -63,16 +61,14 @@ customer_id bigint,
 quantity int, 
 amount double
 );
-
+#Insert data into orders table
 insert into orders values (
 111111,
 "phone",
 1111,
 3,
 1200
-);
-
-insert into orders values (
+),(
 111112, 
 "camera", 
 1111, 
