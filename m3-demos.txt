@@ -131,7 +131,7 @@ rename to freshproducts;
 
 show tables;
 
-alter table freshproducts ands (
+alter table freshproducts add columns (
 expiry_date date 
 comment "Expiry date of fresh produce"
 );
