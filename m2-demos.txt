@@ -8,16 +8,20 @@ create database pikachu;
 #I have created a database called 'pikachu'.
 #To work with the 'pikachu' database, execute the below command
 use pikachu;
+
 #Lets create a table called customers
 create table customers (
 id bigint,
 name string,
 address string
 );
+
 # the table 'customers' got created, to verify execute the following command
 show tables;
+
 # To display schema of customers table, execute the following command
 describe customers;
+
 #Let's insert data into our customers table
 insert into customers values (
 1111, "John", "WA"
@@ -32,21 +36,31 @@ insert into customers values (
 ), (
 6666, "Nina", "NY"
 );
+
 #Now, we will display the customers residing in "WA" using the following command
 select * from customers where address = "WA";
+
 #Here we will select the columns which we want to be displayed as output
 select name, address from customers where address = "CA";
 
+# you can also specify multiple conditions in your where class using and
 select name, address from customers where address = "WA" and id > 2222;
+# The above query will produce output which contains name, address from the customers table based on the conditions we specified
 
+#To get the unqiue list of address from the customers table, we use DISTINCT Keyword in your select statement.
 select DISTINCT address from customers;
 
+#We can arrange the output of our query in an order using order by based on columns, either descending or ascending, by default it takes ascending order.
 select name, address from customers order by address;
+#the above query selects the "name" and "address" columns from the "customers" table and orders the result set by the "address" column in ascending order.
 
+# To count the total number of records we have in our customer table, we can use count(), count(*) will count entire table data not a particular column
 select count(*) from customers;
 
+#The following query retrieves the unique "address" values from the "customers" table along with the count of records for each distinct address, grouping the results by the "address" column
 select address, count(*) from customers group by address;
 
+#The following query counts the number of records for each unique "address" in the "customers" table, assigning the count an alias "customer_count" and grouping by the "address" column.
 select address, count(*) as customer_count from customers group by address;
 
 
@@ -97,6 +111,9 @@ insert into orders values (
 );
 
 #Lets find out the orders placed by the customer, here we use inner join/join, with which we can get matching records from both the tables(Here we are performing inner-join/join on customers and orders tables)
+
 select customers.id, name, product_id 
 from customers join orders 
 where customers.id = orders.customer_id; 
+
+#The above query selected the "id" and "name" columns from the "customers" table and the "product_id" column from the "orders" table, joining them based on the matching "id" and "customer_id" fields, respectively.
