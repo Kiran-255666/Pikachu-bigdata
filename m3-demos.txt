@@ -1,17 +1,27 @@
-Hive
+
+To connect to the beeline:
+
+beeline -u jdbc:hive2://localhost:10000/pikachu -u cloudera
+
+Beeline
 —————
 
 show databases;
-
+#Warning : Execute the below command only if the database doesn't exist
 create database pikachu;
 
+#In Hive QL, you can use the SHOW DATABASES statement with the LIKE clause to filter databases based on a pattern. However, Hive uses * for wildcard matching . Here's the syntax:
 show databases like 'p*'
 
+#to use pikachu database, execute the following command
 use pikachu;
 
+#To list tables in your 'pikachu' database, execute the following,
 show tables;
 
-Terminal
+
+###Explore Ware house directory
+Terminal(
 ————————
 
 hadoop fs  -ls /user/hive/warehouse
@@ -27,7 +37,7 @@ hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0_copy_1
 hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0_copy_2
 
 
-Hive
+Beeline
 ————
 
 use default;
