@@ -65,8 +65,8 @@ hadoop fs -mkdir /data
 hadoop fs -copyFromLocal products.csv /data/ 
 
 hadoop fs -ls /data/
-
-
+Connect to Beeline:
+beeline -u jdbc:hive2://localhost:10000/default -n cloudera
 Hive
 ————
 
