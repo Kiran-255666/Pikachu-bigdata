@@ -49,6 +49,8 @@ select address, count(*) from customers group by address;
 
 select address, count(*) as customer_count from customers group by address;
 
+
+#To get a single from customer table, execute the following command
 select * from customers limit 1;
 
 #Now, lets create a new table called 'orders'
@@ -94,7 +96,7 @@ insert into orders values (
 66
 );
 
-
+#Lets find out the orders placed by the customer, here we use inner join/join, with which we can get matching records from both the tables(Here we are performing inner-join/join on customers and orders tables)
 select customers.id, name, product_id 
 from customers join orders 
 where customers.id = orders.customer_id; 
