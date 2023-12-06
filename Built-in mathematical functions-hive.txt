@@ -1,0 +1,42 @@
+# Launch the Hive shell
+hive
+
+# Create the sample_table
+CREATE TABLE sample_table (
+  id INT,
+  value DOUBLE
+); 
+
+# Insert sample data
+INSERT INTO sample_table VALUES
+(1, 10.5),
+(2, -8.3),
+(3, 4.7),
+(4, 0.9);
+
+# ABS() - Absolute Value Function
+SELECT id, value, ABS(value) AS absolute_value FROM sample_table;
+
+# CEIL() - Ceiling Function
+SELECT id, value, CEIL(value) AS ceiling_value FROM sample_table;
+
+# FLOOR() - Floor Function
+SELECT id, value, FLOOR(value) AS floor_value FROM sample_table;
+
+# ROUND() - Round Function
+SELECT id, value, ROUND(value) AS rounded_value FROM sample_table;
+
+# EXP() - Exponential Function
+SELECT id, value, EXP(value) AS exponent_value FROM sample_table;
+
+# LOG() - Natural Logarithm Function
+SELECT id, value, LOG(value) AS logarithm_value FROM sample_table;
+
+# POWER() - Power Function
+SELECT id, value, POWER(value, 2) AS squared_value FROM sample_table;
+
+# SQRT() - Square Root Function
+SELECT id, value, SQRT(value) AS square_root_value FROM sample_table;
+
+# Exit the Hive shell
+exit;
