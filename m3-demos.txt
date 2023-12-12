@@ -59,7 +59,7 @@ insert into test values (1234, 'Kiran');
 hadoop fs -cat /user/hive/warehouse/test/*
 
 
-Hive
+Beeline
 —————
 drop table test;
 
@@ -67,17 +67,26 @@ drop table test;
 Terminal
 ————————
 
-vi products.csv 
+#Download the products.csv dataset by executing the command in the Terminal 
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/products.csv"
 
+#To check the downloaded file, type 'ls' in the terminal, you will be able to see the downloaded products.csv file.
+ls
 
+#Let's create a directory named 'data' in our HDFS
 hadoop fs -mkdir /data
 
+#Copy the product.csv from your Local file system to data diretory in HDFS.
 hadoop fs -copyFromLocal products.csv /data/ 
 
+#Now, Lets check whether the file is copied.
 hadoop fs -ls /data/
+#If you have successfully verified that your file has been copied, Continue....
+
+
 Connect to Beeline:
 beeline -u jdbc:hive2://localhost:10000/default -n cloudera
-Hive
+Beeline
 ————
 
 create external table if not exists products (
@@ -180,7 +189,7 @@ Terminal
 bin/beeline -u jdbc:hive2://
 
 
-Hive
+Beeline
 ————————
 
 show tables;
@@ -192,18 +201,13 @@ describe test;
 !q
 
 
-Terminal
-————————
 
-bin/beeline -u jdbc:hive2://
-
-
-Hive
+Beeline
 ————————
 describe test;
 
-Create freshproducts.csv with fresh produce information
-
+#Download the freshproducts.csv dataset by executing the command in the Terminal 
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/freshproducts.csv"
 describe freshproducts;
 
 alter table freshproducts
@@ -236,7 +240,7 @@ hadoop fs -copyFromLocal freshproducts.csv /data/
 
 
 
-Hive
+Beeline
 ————————
 
 
@@ -260,7 +264,7 @@ hadoop fs -ls /data/
 (But the original file in Hadoop has moved in this case)
 
 
-Hive
+Beeline
 ————————
 
 load data local inpath 'freshproducts.csv'
