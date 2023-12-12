@@ -32,9 +32,7 @@ hadoop fs -ls /user/hive/warehouse/pikachu.db/customers
 
 hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0
 
-hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0_copy_1
 
-hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0_copy_2
 
 
 Beeline
