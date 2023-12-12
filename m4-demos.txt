@@ -1,0 +1,166 @@
+Beeline
+—————
+#lets connect to beeline
+#Task-1:Working with Array data type
+
+#Lets create a new table 'mobilephones' using the following Query.
+
+
+
+create table mobilephones (
+id string,
+title string,
+cost float,
+colors array<string>,
+screen_size array<float>
+);
+
+#Now lets insert data into the table 'mobilephones'.
+
+insert into table mobilephones
+select "redminote7", "Redmi Note 7", 300, 
+array("white", "silver", "black"), array(float(4.5))
+UNION ALL
+select "motoGplus", "Moto G Plus", 200, array("black", "gold"), 
+array(float(4.5), float(5.5));
+
+#(This causes an error/warning message, because of CBO is enabled)CBO-Cost Based Optimizer
+
+
+select * from mobilephones;
+
+# you can individually access the colors from table-'mobilephones'
+select id, colors from mobilephones;
+
+# you can first element in the array, column_name[index]
+select id, colors[0] from mobilephones;
+
+#Now, Lets drop the mobilephones table and recreate it and load data from a file.
+drop table mobilephones;
+
+#Before that lets download mobilephones.csv file, to do this execute the following statement.
+Terminal:
+---------
+
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/mobilephones.csv"
+
+Beeline:
+--------
+#Now lets recreate mobilephones table and load data from a file
+
+create table mobilephones (
+id string,
+title string,
+cost float,
+colors array<string>,
+screen_size array<float>
+)
+row format delimited fields terminated by ','
+collection items terminated by '#';
+
+#Lets load data into mobilephones table
+
+load data local inpath 'mobilephones.csv'
+into table mobilephones;
+
+#to verify, run select statement.
+
+select * from mobilephones;
+
+
+
+---------------------------------
+#lets drop the mobilephones table that we created in last task and create
+a new table with same name which has a column of 'map' datatype. 
+
+
+Task-2: Working with Map datatype
+------------------------------------
+#lets download mobilephones-map.csv file, to do this execute the following statement.
+Terminal:
+---------
+
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/mobilephones-map.csv"
+
+#create a new table -'mobilephones' and here we work with map datatype.
+
+create table mobilephones (
+id string,
+title string,
+cost float,
+colors array<string>,
+screen_size array<float>,
+features map<string, boolean>
+)
+row format delimited fields terminated by ','
+collection items terminated by '#'
+map keys terminated by ':';
+
+#lets download mobilephones-map.csv file, to do this execute the following statement.
+Terminal:
+---------
+
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/mobilephones-map.csv"
+
+Beeline:
+---------
+#lets load data into 'mobilesphones' table
+
+load data local inpath 'mobilephones-map.csv'
+into table mobilephones;
+
+# execute the select statement to see indivial features.
+
+select id, features['camera'] from mobilephones;
+
+#Lets drop the mobilesphones table now,
+drop table mobilephones;
+
+#In the next task we will create a new table mobilephones, with array,map and struct datatypes.
+Task-3:Working with Struct
+------------------------------------------
+
+
+create table mobilephones (
+id string,
+title string,
+cost float,
+colors array<string>,
+screen_size array<float>,
+features map<string, boolean>,
+information struct<battery:string,camera:string>
+)
+row format delimited fields terminated by ','
+collection items terminated by '#'
+map keys terminated by ':';
+
+#Lets check out the table- 'mobilephones'
+describe mobilephones;
+
+#lets download mobilephones-struct.csv file, to do this execute the following statement.
+Terminal:
+---------
+
+wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/mobilephones-struct.csv"
+
+Beeline:
+------------------------
+load data local inpath 'mobilephones-struct.csv'
+into table mobilephones;
+
+#Lets query the mobilephones table
+select id, features, information 
+from mobilephones;
+#To access individual field within struct is done using '.' operator.
+
+select id, features['camera'], information.battery 
+from mobilephones;
+
+select id, features['camera'] as CameraPresent, information.battery 
+from mobilephones;
+
+
+Turn off CBO: Set hive.cbo.enable to false in hive-site.xml
+
+
+
