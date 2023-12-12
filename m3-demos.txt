@@ -1,5 +1,5 @@
-
-To connect to the beeline:
+#Task-1
+#To connect to the beeline:
 
 beeline -u jdbc:hive2://localhost:10000/pikachu -u cloudera
 
@@ -23,7 +23,7 @@ show tables;
 ###Explore Ware house directory
 Terminal(
 ————————
-
+ # you can use hadoop fs command or hdfs dfs command to explore the warehouse directory
 hadoop fs  -ls /user/hive/warehouse
 
 hadoop fs -ls /user/hive/warehouse/pikachu.db
@@ -32,12 +32,14 @@ hadoop fs -ls /user/hive/warehouse/pikachu.db/customers
 
 hadoop fs -cat /user/hive/warehouse/pikachu.db/customers/000000_0
 
+# In the above directory you can see the customers data that is stored in our hive warehouse directory
 
 
 
+#You might have noticed that the default database doesn't have corresponding directoy, because all in default directory placed at the top direcotry /user/hive/warehouse
 Beeline
 ————
-
+# lets create a tabel named 'test'
 use default;
 
 create table test(id int, name string);
@@ -45,23 +47,33 @@ create table test(id int, name string);
 show tables;
 
 
+
+
 Terminal
 —————————
-
+# Explore the warehouse
 hadoop fs -ls /user/hive/warehouse/
 
 hadoop fs -ls /user/hive/warehouse/test
 
-insert into test values (1234, 'Kiran');
+What did you observe?
 
+
+#Now lets try to insert data into 'test' table using the following statement
+
+insert into test values (1234, 'Kiran');
+# Now explore the directory again.
 hadoop fs -cat /user/hive/warehouse/test/*
 
 
 Beeline
 —————
+#Now, lets try to drop table 'test' by executing the following statement
 drop table test;
 
+#If you explore test directory in our terminal, you might have oberved that test directory is no longer present in our warehourse directory
 
+##Task-2
 Terminal
 ————————
 
@@ -74,7 +86,7 @@ ls
 #Let's create a directory named 'data' in our HDFS
 hadoop fs -mkdir /data
 
-#Copy the product.csv from your Local file system to data diretory in HDFS.
+#store the product.csv to '/data/'. you can copy from your Local file system to data diretory in HDFS.
 hadoop fs -copyFromLocal products.csv /data/ 
 
 #Now, Lets check whether the file is copied.
@@ -86,6 +98,9 @@ Connect to Beeline:
 beeline -u jdbc:hive2://localhost:10000/default -n cloudera
 Beeline
 ————
+# We will now create an eternal table products
+
+#external- data is not managed by Hive, data for this table exists in HDFS directory you specifed.
 
 create external table if not exists products (
 id string,
@@ -95,27 +110,31 @@ cost float
 comment "Table to store product information sold in stores"
 location '/data/';
 
+#If you run the following query,
 select * from products;
 (This is not what we wanted)
-
+#All the products that we specified in csv file is available via Hive, As Hive is schema-on-read, the schema you defined for this table, hive will try to impose the Schema that you referrenced in HDFS.
+#(This is not what we wanted), We got all the data in products.id column, and we have null values in other columns. 
 
 Terminal
 ————————
-
+#Lets explore whether our directory created in hive warehouse directoy.
 hadoop fs -ls /user/hive/warehouse/pikachu.db
-(There should be nothing here)
+#(There should be nothing here)#because its external table
 
+#The metadata for the external table is in metastore, and data is in '/data/'
 hadoop fs -ls /data/
-(The data is here)
+#(The data is here)
 
 drop table products;
 
 hadoop fs -ls /data/
-(The data is still here)
+#(The data is still here)# table no longer exist in database, its schema is also deleted, but the data is in hadoop fs -ls /data/
 
 
-Hive
+Beeline
 ————————
+#Now, lets create the same table 'products' and load data correctly.
 
 create external table if not exists products (
 id string,
@@ -124,18 +143,24 @@ cost float
 )
 comment "Table to store product information sold in stores"
 row format delimited fields terminated by ','
-stored as textfile
+stored as textfile #here you can specify what kind of file that is being read but this is optional.
 location '/data/';
-
+#Row format delimited fields terminated by ',' Hive considers that each field is terminated by ','
 select * from products;
 (This is now how we want it)
 
+#you can figure out whether the table are managed or external table, using the following commands.
 describe formatted customers;
 (Data should be in the warehouse, table type should be managed_table)
 
 describe formatted products;
 (Data should be in the HDFS location where we've placed it, table type should be external_table)
 
+#Lets explore more ways to create tables.
+
+#We use same pikachu database
+Use pikachu;
+#Lets create a table 'fresh_prouducts" using like keyword.Like keyword is used when you want to create a table similar to the table that you want(it should exist in database).Here we create fresh_products table with same column names and column datatypes like products.
 
 create table if not exists fresh_products like products;
 
@@ -143,10 +168,14 @@ show tables;
 
 describe fresh_products;
 
+#you can rename a table using alter table keyword.Lets rename fresh_products to freshproducts.
+
 alter table fresh_products 
 rename to freshproducts;
 
 show tables;
+
+# you can also add columns to existing table using 'alter table' keyword.Lets add expiry_data column of type date along with the comment.
 
 alter table freshproducts add columns (
 expiry_date date 
@@ -155,21 +184,29 @@ comment "Expiry date of fresh produce"
 
 describe freshproducts;
 
+#you can also swap the columns using 'alter table' and at the same time you can also specify the datatype of column that you will be swapping.
 alter table freshproducts 
 change column id id string
 after title;
 
+#Now lets swap the columns of products table, and observe.
 alter table products
 change column id id string
 after title;
 
 (Note that the data does not change)
+
+
+#We know that temporary tables we created in a hive session will get deleted whenthe session ends.
+#Now, we will create a tempory table
+
 create temporary table test_customers 
 like customers;
 
 show tables;
 
 describe test_customers;
+#Let's insert data into 'test_customers' table
 
 insert into test_customers values (
 9999,
@@ -177,21 +214,23 @@ insert into test_customers values (
 "MN"
 );
 
+#Lets query data from test_customers table
 select * from test_customers;
-
+#Quit the hive session
 !q
 
 Terminal
 ————————
-
-bin/beeline -u jdbc:hive2://
+#connect to beeline
 
 
 Beeline
 ————————
 
 show tables;
+#Now you might have obeserved that test_customers is no longer exists.
 
+#Similarly lets create  a temperoroy table' test' just like orders table.
 create temporary table test like orders;
 
 describe test;
@@ -203,16 +242,20 @@ describe test;
 Beeline
 ————————
 describe test;
+#Now you might have obeserved test is no longer exists.
 
 #Download the freshproducts.csv dataset by executing the command in the Terminal 
 wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/freshproducts.csv"
+
+#Lets expore the freshproducts table
 describe freshproducts;
 
+#Lets swap the column title and id.
 alter table freshproducts
 change column title title string
 after id;
 
-
+#Now we will load data from freshproducts.csv, which in our local file system. Local keyword is used when you are trying to load data from local.
 load data local inpath 'freshproducts.csv'
 into table freshproducts; 
 (This is from a local path and not HDFS)
@@ -241,7 +284,7 @@ hadoop fs -copyFromLocal freshproducts.csv /data/
 Beeline
 ————————
 
-
+Now, lets load the data from HDFS(This is from a HDFS path)
 load data inpath '/data/freshproducts.csv' into table freshproducts; 
 
 select * from freshproducts;
