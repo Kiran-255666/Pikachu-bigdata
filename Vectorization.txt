@@ -1,0 +1,47 @@
+#Connect to beeline terminal:
+beeline -u jdbc:hive2://localhost:10000/default -n cloudera
+
+#choose default database
+
+USE default;
+
+Step 1: Create a Table
+Let's create a sample table:
+
+
+-- Create a sample table
+CREATE TABLE vectorization_example (
+  id INT,
+  name STRING,
+  value DOUBLE
+);
+
+-- Insert some sample data
+INSERT INTO vectorization_example VALUES
+  (1, 'Alice', 10.5),
+  (2, 'Bob', 20.3),
+  (3, 'Charlie', 15.8),
+  (4, 'David', 25.1);
+Step 2: Enable Vectorization
+Enable vectorization in your Hive session:
+
+ 
+  
+SET hive.vectorized.execution.enabled=true;
+SET hive.vectorized.execution.reduce.enabled=true;
+Step 3: Perform a Vectorized Query
+Now, let's perform a vectorized query:
+
+ 
+  
+-- Vectorized execution for SELECT and WHERE clauses
+SELECT id, name FROM vectorization_example WHERE value > 15;
+This query selects id and name columns from the table where the value is greater than 15. The vectorized execution will be automatically applied if the conditions are met.
+
+Step 4: Monitor Vectorization 
+Optionally, you can enable vectorization logging to monitor its usage:
+
+SET hive.vectorized.execution.logging.level=DEBUG;
+
+Step 5: Check Results
+Inspect the query results to see the output of the vectorized query.
