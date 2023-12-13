@@ -1,3 +1,8 @@
+--connect to beeline
+Use pikachu,
+
+--Now, lets create a partitioned table in pikachu database
+
 -- Creating a partitioned table in Hive
 
 CREATE TABLE my_partitioned_table (
