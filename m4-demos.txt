@@ -1,7 +1,7 @@
 Beeline
 —————
 #lets connect to beeline
-beeline -u jdbc:hive2://localhost:10000/default -u cloudera
+beeline -u jdbc:hive2://localhost:10000/default -n cloudera
 
 #Task-1:Working with Array data type
 
