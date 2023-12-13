@@ -42,11 +42,11 @@ SET hive.exec.dynamic.partition.mode=nonstrict;
  In the non-strict mode, dynamic partitioning is allowed even if all the partition columns are not specified in the insert statement. 
 Hive will automatically determine the partition columns based on the data being inserted. If a partition column is not provided, Hive will use a special value (usually __HIVE_DEFAULT_PARTITION__).
 
-INSERT INTO my_partitioned_table (id, name, year, month) VALUES (6, 'Alice', 2023, 4);
+INSERT INTO my_partitioned_table (id, name, year, month) PARTITION (year,month) VALUES (6, 'Alice', 2023, 4);
 -- Inserting more data using dynamic partitioning
-INSERT INTO my_partitioned_table (id, name, year, month) VALUES (7, 'Grace', 2023, 4);
-INSERT INTO my_partitioned_table (id, name, year, month) VALUES (8, 'Henry', 2023, 5);
-INSERT INTO my_partitioned_table (id, name, year, month) VALUES (9, 'Isabel', 2023, 5);
+INSERT INTO my_partitioned_table (id, name, year, month) PARTITION (year,month) VALUES (7, 'Grace', 2023, 4);
+INSERT INTO my_partitioned_table (id, name, year, month)PARTITION (year,month) VALUES (8, 'Henry', 2023, 5);
+INSERT INTO my_partitioned_table (id, name, year, month) PARTITION (year,month) VALUES (9, 'Isabel', 2023, 5);
 INSERT INTO my_partitioned_table (id, name, year, month) VALUES (10, 'Jack', 2023, 6);
 INSERT INTO my_partitioned_table (id, name, year, month) VALUES (11, 'Karen', 2023, 6);
 
