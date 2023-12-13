@@ -62,7 +62,7 @@ collection items terminated by '#';
 
 #Lets load data into mobilephones table
 
-load data local inpath 'mobilephones.csv'
+load data local inpath '/home/cloudera/mobilephones.csv'
 into table mobilephones;
 
 #to verify, run select statement.
@@ -108,7 +108,7 @@ Beeline:
 ---------
 #lets load data into 'mobilesphones' table
 
-load data local inpath 'mobilephones-map.csv'
+load data local inpath '/home/cloudera/mobilephones-map.csv'
 into table mobilephones;
 
 # execute the select statement to see indivial features.
@@ -147,7 +147,7 @@ wget "https://github.com/Kiran-255666/Pikachu-bigdata/raw/main/mobilephones-stru
 
 Beeline:
 ------------------------
-load data local inpath 'mobilephones-struct.csv'
+load data local inpath '/home/cloudera/mobilephones-struct.csv'
 into table mobilephones;
 
 #Lets query the mobilephones table
