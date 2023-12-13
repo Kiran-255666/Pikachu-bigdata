@@ -1,0 +1,33 @@
+-- Create the source table
+CREATE TABLE source_table (
+  id INT,
+  name STRING,
+  value DOUBLE
+);
+
+-- Insert some sample data into the source table
+INSERT INTO source_table VALUES
+  (1, 'John', 10.5),
+  (2, 'Jane', 20.3),
+  (3, 'Bob', 15.7),
+  (4, 'Alice', 18.2),
+  (5, 'Charlie', 12.8),
+  (6, 'David', 14.6),
+  (7, 'Eva', 22.1),
+  (8, 'Frank', 17.3),
+  (9, 'Grace', 19.8),
+  (10, 'Henry', 13.2);
+
+-- Create a bucketed table with 4 buckets
+CREATE TABLE bucketed_table (
+  id INT,
+  name STRING,
+  value DOUBLE
+)
+CLUSTERED BY (id) INTO 4 BUCKETS;
+
+-- Insert data into the bucketed table from the source table
+INSERT INTO TABLE bucketed_table SELECT * FROM source_table;
+
+-- Query the bucketed table
+SELECT * FROM bucketed_table;
