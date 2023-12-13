@@ -24,7 +24,7 @@ UNION ALL
 select "motoGplus", "Moto G Plus", 200, array("black", "gold"), 
 array(float(4.5), float(5.5));
 
-#(This causes an error/warning message, because of CBO is enabled)CBO-Cost Based Optimizer
+#(This causes an exception, because of CBO is enabled)CBO-Cost Based Optimizer
 
 
 select * from mobilephones;
