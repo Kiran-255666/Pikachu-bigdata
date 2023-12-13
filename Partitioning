@@ -1,0 +1,67 @@
+-- Creating a partitioned table in Hive
+
+CREATE TABLE my_partitioned_table (
+  id INT,
+  name STRING
+)
+PARTITIONED BY (year INT, month INT);
+
+-- Inserting data into the partitioned table
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=1) VALUES (1, 'John');
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=2) VALUES (2, 'Jane');
+-- Inserting more data using static partitioning
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=1) VALUES (3, 'Eva');
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=1) VALUES (4, 'Alex');
+
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=2) VALUES (5, 'Chris');
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=2) VALUES (6, 'Diana');
+
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=3) VALUES (7, 'Frank');
+
+
+-- Querying a partitioned table in Hive
+
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 1;
+
+-- Static partitioning, In static partitioning, everytime you insert data, you need to specify partition values.
+INSERT INTO my_partitioned_table PARTITION (year=2023, month=3) VALUES (3, 'Bob');
+
+-- Dynamic partitioning
+
+SET hive.exec.dynamic.partition=true;
+
+--Dynamic partitioning allows Hive to determine the partition values dynamically during the data insertion process rather than requiring explicit partition values to be specified.
+
+SET hive.exec.dynamic.partition.mode=nonstrict;
+
+ In the non-strict mode, dynamic partitioning is allowed even if all the partition columns are not specified in the insert statement. 
+Hive will automatically determine the partition columns based on the data being inserted. If a partition column is not provided, Hive will use a special value (usually __HIVE_DEFAULT_PARTITION__).
+
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (6, 'Alice', 2023, 4);
+-- Inserting more data using dynamic partitioning
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (7, 'Grace', 2023, 4);
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (8, 'Henry', 2023, 5);
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (9, 'Isabel', 2023, 5);
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (10, 'Jack', 2023, 6);
+INSERT INTO my_partitioned_table (id, name, year, month) VALUES (11, 'Karen', 2023, 6);
+
+
+-- Querying data in the partition (year=2023, month=1)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 1;
+
+-- Querying data in the partition (year=2023, month=2)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 2;
+
+-- Querying data in the partition (year=2023, month=3)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 3;
+
+-- Querying data in the partition (year=2023, month=4)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 4;
+
+-- Querying data in the partition (year=2023, month=5)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 5;
+
+-- Querying data in the partition (year=2023, month=6)
+SELECT * FROM my_partitioned_table WHERE year = 2023 AND month = 6;
+
+
