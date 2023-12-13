@@ -1,4 +1,10 @@
+--Connect to beeline
+Use pikachu;
+
+--Now lets create a table in pikachu database
+
 -- Create the source table
+
 CREATE TABLE source_table (
   id INT,
   name STRING,
