@@ -1,3 +1,4 @@
+In HBase, cells can have multiple versions, and versioning is managed based on timestamps. Here's a hands-on example of working with cell value versioning:
 # Create a Table with Versioning Enabled
 create 'user_login_attempts', 'login_info', {VERSIONS => 10}
 
