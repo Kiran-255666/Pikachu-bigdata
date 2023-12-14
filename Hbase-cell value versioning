@@ -3,7 +3,7 @@ In HBase, cells can have multiple versions, and versioning is managed based on t
 create 'user_login_attempts', 'login_info', {VERSIONS => 10}
 
 #Alter the table
-alter 'usr_login_attempts', {NAME => 'login_info', VERSIONS => 5}
+alter 'user_login_attempts', {NAME => 'login_info', VERSIONS => 5}
 
 # Insert Data with Versions (Simulating User Login Attempts)
 put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-01T08:00:00'
