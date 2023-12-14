@@ -1,0 +1,18 @@
+### Example 2: Time Series Data
+
+Suppose you want to store sensor data with a timestamp.
+
+```shell
+# Create table
+create 'sensor_data', 'data'
+
+# Insert data
+put 'sensor_data', 'sensor1_20230101', 'data:temperature', '25.5'
+put 'sensor_data', 'sensor1_20230102', 'data:temperature', '26.0'
+put 'sensor_data', 'sensor2_20230101', 'data:temperature', '23.8'
+
+# Retrieve data for a specific sensor and date
+get 'sensor_data', 'sensor1_20230101'
+```
+
+Here, we use a composite row key ('sensor_id_date') to store time series data. The column family 'data' contains the actual sensor readings.
