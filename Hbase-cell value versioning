@@ -1,0 +1,20 @@
+# Create a Table with Versioning Enabled
+create 'user_login_attempts', 'login_info', {VERSIONS => 10}
+
+# Insert Data with Versions (Simulating User Login Attempts)
+put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-01T08:00:00'
+put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-02T12:30:00'
+put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-03T18:45:00'
+
+# Retrieve and View Versions
+get 'user_login_attempts', 'user123', {COLUMN => 'login_info:login_time', VERSIONS => 10}
+
+# Additional Operations
+# Delete a specific version (simulating a rollback)
+delete 'user_login_attempts', 'user123', 'login_info:login_time', 1641126000000  # Assuming the timestamp of the second login
+
+# Delete all versions (resetting login attempts)
+deleteall 'user_login_attempts', 'user123', 'login_info:login_time'
+
+# Get versions within a timestamp range
+get 'user_login_attempts', 'user123', {COLUMN => 'login_info:login_time', TIMERANGE => [1640995200000, 1641081600000]}
