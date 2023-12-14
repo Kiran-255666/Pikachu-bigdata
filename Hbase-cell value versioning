@@ -13,7 +13,7 @@ put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-04T18:45
 put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-05T18:45:00'
 put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-05T18:45:00'
 put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-06T1'8:45:00'
-put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-07T18:45:00
+put 'user_login_attempts', 'user123', 'login_info:login_time', '2023-01-07T18:45:00'
 
 # Retrieve and View Versions
 get 'user_login_attempts', 'user123', {COLUMN => 'login_info:login_time', VERSIONS => 10}
