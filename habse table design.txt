@@ -1,3 +1,13 @@
+#Check status of master and region-server
+
+sudo service hbase-master status
+sudo service hbase-master start
+
+
+sudo service hbase-regionserever status
+suod servie hbase-regionserver start
+
+
 HBase Table Design
 
 Designing an HBase table involves making decisions about the table schema, including the row key design, column families, and column qualifiers. Below are hands-on examples for creating an HBase table design:
