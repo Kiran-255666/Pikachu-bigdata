@@ -1,0 +1,23 @@
+HBase Table Design
+
+Designing an HBase table involves making decisions about the table schema, including the row key design, column families, and column qualifiers. Below are hands-on examples for creating an HBase table design:
+
+### Example 1: Basic Table Design
+
+Let's say you are designing a table to store user information.
+
+```shell
+# Create table
+create 'users', 'personal_info', 'professional_info'
+
+# Insert data
+put 'users', 'john_doe', 'personal_info:name', 'John Doe'
+put 'users', 'john_doe', 'personal_info:email', 'john.doe@example.com'
+put 'users', 'john_doe', 'professional_info:position', 'Software Engineer'
+put 'users', 'john_doe', 'professional_info:company', 'TechCo'
+
+# Retrieve data
+get 'users', 'john_doe'
+```
+
+In this example, we created a table called 'users' with two column families: 'personal_info' and 'professional_info'. The row key is the user ID ('john_doe'), and we store personal and professional information in their respective column families.
