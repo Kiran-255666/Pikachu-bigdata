@@ -4,7 +4,7 @@ sudo service hbase-master status
 sudo service hbase-master start
 
 
-sudo service hbase-regionserever status
+sudo service hbase-regionserver status
 suod servie hbase-regionserver start
 
 
