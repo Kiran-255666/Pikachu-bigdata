@@ -1,0 +1,87 @@
+# Create and Populate the Sales Table
+CREATE TABLE sales (
+    order_id INT,
+    product_id INT,
+    sale_date DATE,
+    amount DECIMAL(10, 2)
+);
+
+INSERT INTO sales VALUES
+    (1, 101, '2023-01-01', 100.50),
+    (2, 102, '2023-01-02', 150.75),
+    (3, 101, '2023-01-03', 200.20),
+    (4, 103, '2023-01-03', 75.90),
+    (5, 102, '2023-01-04', 120.30),
+    (6, 101, '2023-01-05', 180.60);
+
+# Ranking Rows by Amount
+The RANK() function in Impala is an analytical window function used to assign a rank to each row within a result set based on the values of one or more columns.
+It is particularly useful when you want to identify the relative position of rows in terms of a specified column's values.
+
+  RANK() OVER (ORDER BY amount DESC):
+  
+  RANK(): This is the window function that assigns a rank to each row within the result set.
+  OVER (ORDER BY amount DESC): This specifies the order in which the rows should be ranked based on the amount column in descending order.
+  Explanation:
+  
+  The result set will include columns order_id, amount, and a new column sales_rank.
+  Rows will be ranked based on the values in the amount column in descending order.
+  The sales_rank column will contain the assigned rank for each row.
+
+                                SELECT
+                                    order_id,
+                                    amount,
+                                    RANK() OVER (ORDER BY amount DESC) as sales_rank
+                                FROM sales;
+
+# Calculating Running Total
+
+This query calculates the running total of the amount column for each row in the result set, ordered by the sale_date. The running total represents the cumulative sum of the amount up to the current row.
+SUM(amount) OVER (ORDER BY sale_date) as running_total:
+
+SUM(amount): This is an aggregate function that calculates the sum of the amount column.
+OVER (ORDER BY sale_date): This specifies the window frame for the SUM function. It indicates that the sum should be computed based on the order of rows determined by the sale_date.
+as running_total: This renames the result column as running_total.
+
+                                  SELECT
+                                      order_id,
+                                      amount,
+                                      SUM(amount) OVER (ORDER BY sale_date) as running_total
+                                  FROM sales;
+
+
+# Finding Lead and Lag Values
+
+This query retrieves the order_id and amount columns from the sales table. Additionally, it uses the LEAD and LAG window functions to find the next (next_sale_amount) and previous (prev_sale_amount) sale amounts based on the order of rows determined by the sale_date.
+LEAD(amount) OVER (ORDER BY sale_date) as next_sale_amount:
+
+LEAD(amount): This window function returns the value of the amount column in the next row based on the specified ordering.
+OVER (ORDER BY sale_date): This specifies the order of rows based on the sale_date.
+LAG(amount) OVER (ORDER BY sale_date) as prev_sale_amount:
+
+LAG(amount): This window function returns the value of the amount column in the previous row based on the specified ordering.
+OVER (ORDER BY sale_date): This specifies the order of rows based on the sale_date.
+
+                                    SELECT
+                                        order_id,
+                                        amount,
+                                        LEAD(amount) OVER (ORDER BY sale_date) as next_sale_amount,
+                                        LAG(amount) OVER (ORDER BY sale_date) as prev_sale_amount
+                                    FROM sales;
+
+# Calculating Average Amount per Product
+
+This query retrieves the order_id, product_id, and amount columns from the sales table. It then uses the AVG window function to calculate the average amount per product based on the product_id.
+AVG(amount) OVER (PARTITION BY product_id) as avg_amount_per_product:
+
+AVG(amount): This window function calculates the average of the amount column.
+OVER (PARTITION BY product_id): This specifies the window frame for the AVG function. It indicates that the average should be computed separately for each distinct value of product_id.
+
+                                      SELECT
+                                          order_id,
+                                          product_id,
+                                          amount,
+                                          AVG(amount) OVER (PARTITION BY product_id) as avg_amount_per_product
+                                      FROM sales;
+
+For instance, for product_id 101, the avg_amount_per_product is calculated as (100.50 + 200.20 + 180.60) / 3, resulting in 160.10. This pattern is repeated for each distinct product_id in the result set.
