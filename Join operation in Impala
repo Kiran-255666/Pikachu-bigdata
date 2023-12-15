@@ -1,0 +1,69 @@
+-- Create 'employees' table
+CREATE TABLE employees (
+    emp_id INT,
+    emp_name STRING,
+    emp_dept_id INT,
+    emp_salary INT
+);
+
+-- Create 'departments' table
+CREATE TABLE departments (
+    dept_id INT,
+    dept_name STRING
+);
+
+-- Insert data into 'employees' table
+INSERT INTO employees VALUES
+    (1, 'Alice', 101, 50000),
+    (2, 'Bob', 102, 60000),
+    (3, 'Charlie', 101, 55000),
+    (4, 'David', 103, 70000);
+
+-- Insert data into 'departments' table
+INSERT INTO departments VALUES
+    (101, 'IT'),
+    (102, 'Finance'),
+    (103, 'HR');
+
+-- Impala Join Examples
+
+-- Inner Join:
+Returns only the rows where there is a match in both tables based on the specified join condition.
+In the context of the sample data, it would return only the rows where emp_dept_id in the "employees" table matches dept_id in the "departments" table.
+
+SELECT * FROM employees
+INNER JOIN departments ON employees.emp_dept_id = departments.dept_id;
+
+Right Join:
+
+Returns all rows from the right table and the matching rows from the left table.
+If there is no match in the left table, the result will contain NULL values for columns from the left table.
+
+
+
+-- Left Join:
+
+Returns all rows from the left table (e.g., "employees") and the matching rows from the right table (e.g., "departments").
+If there is no match in the right table, the result will contain NULL values for columns from the right table.
+
+SELECT * FROM employees
+LEFT JOIN departments ON employees.emp_dept_id = departments.dept_id;
+
+
+--Right Join:
+
+Returns all rows from the right table and the matching rows from the left table.
+If there is no match in the left table, the result will contain NULL values for columns from the left table.
+Full Outer Join:
+
+SELECT * FROM employees
+RIGHT JOIN departments ON employees.emp_dept_id = departments.dept_id;
+
+
+-- Full Outer Join:
+
+Returns all rows when there is a match in either the left or right table.
+If there is no match in either table, the result will contain NULL values for columns from the table with no match
+
+SELECT * FROM employees
+FULL OUTER JOIN departments ON employees.emp_dept_id = departments.dept_id;
