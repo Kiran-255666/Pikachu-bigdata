@@ -1,0 +1,24 @@
+Step 1: Start Kafka Server
+
+ Start the Kafka server using the following command:
+bin/kafka-server-start.sh config/server.properties
+
+Step 2: Create a Kafka Topic:
+1. Open a new terminal window.
+2. Run the following command to create a Kafka topic:
+bin/kafka-topics.sh --create --topic myTopic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+<<<<Replace myTopic with your desired topic name.>>>>
+
+Step 6: Produce and Consume Messages
+1. Open two terminal windows.
+
+2. In the first window, run a producer to send messages to the topic:
+Execute the following command to run a producer:
+bin/kafka-console-producer.sh --topic myTopic --bootstrap-server localhost:9092
+
+3. In the second window, run a consumer to receive messages:
+Execute the following command to run a producer:
+bin/kafka-console-consumer.sh --topic myTopic --bootstrap-server localhost:9092 --from-beginning
+
+Now you can produce messages in the producer window, and they will be consumed in the consumer window.
+
