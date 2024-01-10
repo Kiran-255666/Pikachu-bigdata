@@ -1,0 +1,21 @@
+Step 1: Download and Extract Kafka
+1.	Open a terminal in your Cloudera VM.
+2.	Go to the Downloads folder using the following command.
+cd Downloads
+3.	Download Kafka using the following command:
+wget https://downloads.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+4.	Extract the downloaded file using the following command:
+tar -xzf kafka_2.13-3.6.1.tgz
+
+Step 2: Start Zookeeper
+1. If Zookeeper is not already running, start it using Cloudera Manager.
+
+Step 3: Configure Kafka
+1.	Navigate to the Kafka directory:
+        cd kafka_2.13-3.6.1
+2.	Edit/verify the config/server.properties file to set the following configurations:
+3.	cd config
+4.	vi server.properties
+5.	verify the following property in the server.properties file.
+6.	zookeeper.connect=localhost:2181
+
