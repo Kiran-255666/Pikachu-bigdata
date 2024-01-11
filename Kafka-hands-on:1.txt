@@ -9,7 +9,7 @@ Step 2: Create a Kafka Topic:
 bin/kafka-topics.sh --create --topic myTopic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
 <<<<Replace myTopic with your desired topic name.>>>>
 
-Step 6: Produce and Consume Messages
+Step 3: Produce and Consume Messages
 1. Open two terminal windows.
 
 2. In the first window, run a producer to send messages to the topic:
